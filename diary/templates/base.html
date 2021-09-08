@@ -29,15 +29,40 @@
             <a class="navbar-brand" href="{% url 'diary:index' %}">Start Bootstrap</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item {% block active_inquiry %}{% endblock %}">
+                        <a class="navbar-brand"  href="{% url 'diary:inquiry' %}">INQUIRY</a>
+                    </li>
+                </ul>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% block active_inquiry %}{% endblock %}">Sign Up</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'diary:inquiry' %}">Log In</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sign In</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
     <!-- Header-->
     {% block header %} {% endblock %}
+
+    {%if messages %}
+    <div class="container">
+        <div class="row">
+            <div class="my-div-style w-100">
+                <ul class="messages" style="list-style: none;">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{message.tags}}" {% endif %}>
+                    {{ message }}
+                </li>
+                {% endfor%}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <!-- Content section 1-->
     <!-- content -->
     {% block contents %} {% endblock %}

@@ -34,7 +34,7 @@ class InquiryView(generic.FormView):
 class DiaryListView(LoginRequiredMixin,generic.ListView):
     model = Diary
     template_name = 'diary_list.html'
-    peginate_by = 2
+    paginate_by = 2
 
     def get_queryset(self):
         diaries = Diary.objects.filter(user=self.request.user).order_by('-created_at')
@@ -76,3 +76,12 @@ class DiaryUpdateView(LoginRequiredMixin, generic.UpdateView):
     def form_invalid(self,form):
         messages.error(self.request, "日記の更新に失敗しました")
         return super().form_invalid(form)
+
+class DiaryDeleteView(LoginRequiredMixin,generic.DeleteView):
+    model = Diary
+    template_name = 'diary_delete.html'
+    success_url = reverse_lazy('diary:diary_list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "日記を削除しました")
+        return super().delete(request, *args, **kwargs)
